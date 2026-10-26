@@ -1,0 +1,13 @@
+From: Uber Eats Trendyol Go <infotrendyolgo@mail.trendyolgo.com>
+To: kullanici@example.com
+Subject: Yemek =?utf-8?b?U2lwYXJpxZ9pbmkgQWxkxLFrIPCfjZQ=?=
+Date: Mon, 19 Oct 2026 06:00:00 +0000
+Message-ID: <tgo_spoofed@test>
+Authentication-Results:
+ mx.google.com; dkim=fail header.i=@mail.trendyolgo.com; spf=softfail
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><body><p>99999999999 numaral=C4=B1 Yemek sipari=C5=9Fini ald=C4=B1k. <a=
+ href=3D"https://evil.example/kargo-takip">Takip et</a></p></body></html>

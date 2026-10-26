@@ -1,0 +1,1 @@
+Provider marks from simple-icons 15.16.0 (CC0, https://simpleicons.org), recoloured. OpenRouter and xAI have no mark there and show a letter badge. Trademarks belong to their owners; used only to label the provider.

@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <!-- theme (cookie shared by every OS Suite app on this device; no cookie = dark) -->
+  <script>try{document.documentElement.dataset.theme=(document.cookie.match(/(?:^|;\s*)os_suite_theme=(dark|light)/)||[])[1]||"dark"}catch(e){}</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CommerceOS</title>
+  <link rel="stylesheet" href="/static/vendor/fonts.css">
+  <link rel="stylesheet" href="/static/styles.css">
+  <!-- skip the boot screen when this tab already showed it (a reload), before anything is painted -->
+  <script>try { if (sessionStorage.getItem("booted")) document.documentElement.classList.add("booted"); } catch (_) {}</script>
+  <script src="/static/theme.js" defer></script>
+  <script src="/static/boot.js" defer></script>
+  <script src="/static/app.js" defer></script>
+  <script>window.osSuiteAiPrimaryHint = "Derin arama bunu kullanır";</script>
+  <script src="/static/aisettings.js" defer></script>
+  <script src="/static/backupsettings.js" defer></script>
+  <script src="/static/guide.js" defer></script>
+</head>
+<body>
+<div class="boot" id="boot" role="progressbar" aria-label="CommerceOS yükleniyor" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+  <div class="boot-core">
+    <div class="boot-logo"><span class="brand-orb" aria-hidden="true"></span> CommerceOS</div>
+    <div class="boot-sub">TİCARET SİSTEMİ BAŞLATILIYOR</div>
+    <div class="boot-hud">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <path class="boot-mark" d="M96 1h8l-4 6z"/>
+        <g class="ring-ticks">
+          <circle cx="100" cy="100" r="93" pathLength="360" class="ticks-long"/>
+          <circle cx="100" cy="100" r="94" pathLength="360" class="ticks-short"/>
+        </g>
+        <circle cx="100" cy="100" r="82" class="arc-track"/>
+        <circle cx="100" cy="100" r="82" pathLength="100" class="boot-arc" id="boot-arc" transform="rotate(-90 100 100)"/>
+        <g class="ring-segs"><circle cx="100" cy="100" r="69" pathLength="360"/></g>
+        <circle cx="100" cy="100" r="57" pathLength="360" class="ring-inner"/>
+      </svg>
+      <div class="boot-center"><b id="boot-pct">0<small>%</small></b><span id="boot-label">YÜKLENİYOR</span></div>
+    </div>
+    <ol class="boot-log" id="boot-log">
+      <li data-step="server"><span class="boot-step">Sunucu bağlantısı</span><span class="boot-dots"></span><span class="boot-res"></span></li>
+      <li data-step="sites"><span class="boot-step">Sitelerim ve logolar</span><span class="boot-dots"></span><span class="boot-res"></span></li>
+      <li data-step="tracked"><span class="boot-step">Fiyat takibi</span><span class="boot-dots"></span><span class="boot-res"></span></li>
+      <li data-step="history"><span class="boot-step">Arama geçmişi</span><span class="boot-dots"></span><span class="boot-res"></span></li>
+      <li data-step="akakce"><span class="boot-step">Fiyat kaynakları</span><span class="boot-dots"></span><span class="boot-res"></span></li>
+      <li data-step="gemini"><span class="boot-step">Yapay zekâ (derin arama)</span><span class="boot-dots"></span><span class="boot-res"></span></li>
+    </ol>
+    <div class="boot-ready" id="boot-ready" aria-live="polite"></div>
+  </div>
+</div>
+<header class="topbar">
+  <div class="brand"><span class="brand-orb" aria-hidden="true"></span>CommerceOS</div>
+  <div class="status-wrap" id="status-wrap">
+    <button class="status" id="status" type="button" aria-expanded="false" aria-controls="status-pop" aria-describedby="status-pop">
+      <svg class="pulse" viewBox="0 0 40 16" width="40" height="16" aria-hidden="true">
+        <polyline class="pulse-base" points="0,8 11,8 13,6 15,8 18,8 20,1.5 23,14.5 25,8 28,8 30,6.5 32,8 40,8" pathLength="100"/>
+        <line class="pulse-flat" x1="0" y1="8" x2="40" y2="8"/>
+        <polyline class="pulse-beat" points="0,8 11,8 13,6 15,8 18,8 20,1.5 23,14.5 25,8 28,8 30,6.5 32,8 40,8" pathLength="100"/>
+      </svg>
+      <span id="status-text" role="status">Yükleniyor…</span>
+    </button>
+    <!-- details and this month's Gemini tokens: on hover / keyboard focus, or a tap on touch screens -->
+    <div class="status-pop" id="status-pop" role="tooltip"></div>
+  </div>
+  <div class="top-right">
+    <button class="icon-btn" type="button" data-open-settings title="Ayarlar" aria-label="Ayarlar">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+    </button>
+    <div class="alerts-wrap">
+      <button class="icon-btn alerts-btn" id="alerts-btn" type="button" aria-expanded="false" aria-controls="alerts-pop" title="Fiyat alarmları" aria-label="Fiyat alarmları">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        <span class="alerts-count" id="alerts-count" hidden></span>
+      </button>
+      <div class="alerts-pop" id="alerts-pop" hidden>
+        <div class="alerts-head"><b>Fiyat alarmları</b></div>
+        <ol class="alerts-list" id="alerts-list"></ol>
+      </div>
+    </div>
+    <button class="icon-btn theme-btn" type="button" data-theme-toggle aria-label="Tema değiştir">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <mask id="sm-mask"><rect x="-4" y="-4" width="32" height="32" fill="#fff"/><circle class="sm-cut" cx="25" cy="8" r="5.5" fill="#000"/></mask>
+        <circle class="sm-core" cx="12" cy="12" r="5" fill="currentColor" mask="url(#sm-mask)"/>
+        <g class="sm-rays" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <line x1="12" y1="1.5" x2="12" y2="3.5"/><line x1="12" y1="20.5" x2="12" y2="22.5"/>
+          <line x1="1.5" y1="12" x2="3.5" y2="12"/><line x1="20.5" y1="12" x2="22.5" y2="12"/>
+          <line x1="4.6" y1="4.6" x2="6" y2="6"/><line x1="18" y1="18" x2="19.4" y2="19.4"/>
+          <line x1="4.6" y1="19.4" x2="6" y2="18"/><line x1="18" y1="6" x2="19.4" y2="4.6"/>
+        </g>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- my stores: a thin shortcut strip above the page (management lives in the drawer) -->
+<nav class="sites-bar" aria-label="Sitelerim">
+  <div class="sites-bar-in">
+    <b class="sb-label">Sitelerim</b>
+    <select id="dock-group" class="sb-group" aria-label="Site grubu" hidden></select>
+    <div class="dock" id="dock"></div>
+  </div>
+</nav>
+
+<main class="layout" id="layout">
+  <!-- left: the main task (search, compare); right: what to keep an eye on (list, tracked prices).
+       Below 1000 px the two columns become views switched by the tab bar at the bottom. -->
+  <div class="col-main">
+    <section class="search-card card" aria-label="Ürün ara">
+      <form id="search-form" class="search-form" autocomplete="off">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="q" name="q" type="search" placeholder="Ürün ara… (ör. AirPods Pro 2, Dyson V15, kablosuz kulaklık)" aria-label="Aranacak ürün" maxlength="120" required>
+          <!-- example searches typing themselves while the box is empty (app.js "typer"); decoration only -->
+          <span class="typer" aria-hidden="true">Ara: <b></b><i class="typer-caret"></i></span>
+        </div>
+        <button class="btn primary" type="submit">Ara</button>
+      </form>
+      <div class="recent" id="recent" hidden></div>
+    </section>
+
+
+    <section class="card results" id="results" hidden aria-live="polite"></section>
+    <section class="card welcome" id="welcome">
+      <!-- a magnifier checks three stores' tags and the cheapest lights up; no real store is named -->
+      <svg class="welcome-scene" viewBox="0 0 240 140" aria-hidden="true" focusable="false">
+        <rect class="w-tag" x="8" y="48" width="64" height="58" rx="8"/>
+        <text class="w-store" x="40" y="72">Mağaza A</text><text class="w-price" x="40" y="92">13.499 TL</text>
+        <rect class="w-tag w-best" x="88" y="48" width="64" height="58" rx="8"/>
+        <text class="w-store" x="120" y="72">Mağaza B</text><text class="w-price" x="120" y="92">12.631 TL</text>
+        <rect class="w-tag" x="168" y="48" width="64" height="58" rx="8"/>
+        <text class="w-store" x="200" y="72">Mağaza C</text><text class="w-price" x="200" y="92">12.999 TL</text>
+        <g class="w-badge"><rect x="90" y="114" width="60" height="20" rx="10"/><text x="120" y="128">en ucuz</text></g>
+        <g class="w-lens">
+          <circle class="w-glass" cx="40" cy="36" r="18"/>
+          <circle class="w-rim" cx="40" cy="36" r="18"/>
+          <line class="w-handle" x1="53" y1="49" x2="64" y2="60"/>
+        </g>
+      </svg>
+      <div class="welcome-text">
+        <h2>Ne arıyorsun?</h2>
+        <p class="muted">Bir ürün adı yaz, mağazaları senin yerine gezelim.</p>
+        <ol class="welcome-steps">
+          <li><span class="step-n">1</span><div><b>Hızlı ara</b><span class="muted small">Mağaza fiyatları saniyeler içinde, token harcamadan.</span></div></li>
+          <li><span class="step-n">2</span><div><b>Bulamazsan <span class="deep-word">Derin ara</span></b><span class="muted small">Seçtiğin yapay zekâ sağlayıcısıyla tüm internette (token harcar).</span></div></li>
+          <li><span class="step-n">3</span><div><b>Takibe al ya da sepete ekle</b><span class="muted small">Sağdaki panelde (telefonda alttaki sekmelerde) durur; fiyat düşünce haber verilir.</span></div></li>
+        </ol>
+      </div>
+    </section>
+  </div>
+
+  <aside class="rail" aria-label="Sepet, siparişler ve fiyat takibi">
+    <section class="card" id="cart-card" aria-label="Sepet">
+      <button class="card-head fold-head" type="button" id="cart-toggle" aria-expanded="false" aria-controls="cart-body">
+        <span class="fold-title"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2.5 3.5h2.6l2.5 11.6a1.2 1.2 0 0 0 1.2.9h9.3a1.2 1.2 0 0 0 1.2-.9L21 7.5H6"/></svg> Sepet</span>
+        <span class="muted small" id="cart-meta"></span>
+        <b class="cart-total" id="cart-total"></b>
+        <span class="fold-icon" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></span>
+      </button>
+      <div class="fold-body" id="cart-body">
+        <div class="fold-tools" id="cart-tools" hidden>
+          <span class="muted small" id="cart-checked"></span>
+          <span class="head-actions">
+            <button class="icon-btn" type="button" id="cart-compare" title="Fiyatları güncelle (token yok)" aria-label="Fiyatları güncelle"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button>
+            <button class="icon-btn" type="button" id="cart-clear" title="Sepeti boşalt" aria-label="Sepeti boşalt"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+          </span>
+        </div>
+        <div id="cart"></div>
+      </div>
+    </section>
+
+    <section class="card expanded" id="orders-card" aria-label="Siparişlerim">
+      <button class="card-head fold-head" type="button" id="orders-toggle" aria-expanded="true" aria-controls="orders-body">
+        <span class="fold-title"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3 3.5 7.5v9L12 21l8.5-4.5v-9z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/></svg> Siparişlerim</span>
+        <span class="badge ship" id="orders-open" hidden></span>
+        <span class="muted small fold-count" id="orders-count"></span>
+        <span class="fold-icon" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></span>
+      </button>
+      <div class="fold-body" id="orders-body">
+        <div class="fold-tools">
+          <span class="muted small" id="orders-meta"></span>
+          <button class="icon-btn" type="button" id="orders-scan" hidden title="E-postaları şimdi tara (token yok)" aria-label="E-postaları şimdi tara"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button>
+        </div>
+        <div class="orders" id="orders"></div>
+      </div>
+    </section>
+
+    <section class="card" id="tracking-card">
+      <div class="card-head">
+        <h2 class="fold-title"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg> Fiyat takibi</h2>
+        <span class="muted small" id="tracking-meta"></span>
+        <button class="icon-btn" type="button" id="track-check" hidden title="Şimdi kontrol et (token yok)" aria-label="Şimdi kontrol et"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button>
+      </div>
+      <div class="tracked" id="tracked"></div>
+    </section>
+  </aside>
+</main>
+
+<!-- seldom used: managing stores, the full search history. A side drawer; full screen on a phone. -->
+<div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+<aside class="drawer" id="drawer" aria-label="Panel" hidden>
+  <section class="drawer-panel" id="sites-panel" hidden>
+    <div class="card-head sites-head">
+      <div class="sh-title">
+        <h2>Sitelerim</h2>
+        <span class="muted small"><span id="sites-count"></span> · Sıralamak için sürükle</span>
+      </div>
+      <span class="head-actions">
+        <button class="btn sm primary" type="button" id="add-site"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg><span class="lbl-long">Site ekle</span><span class="lbl-short">Site</span></button>
+        <button class="btn sm" type="button" id="add-group"><span class="lbl-long">Grup ekle</span><span class="lbl-short">Grup</span></button>
+        <button class="icon-btn drawer-close" type="button" aria-label="Kapat"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </span>
+    </div>
+    <div class="sites" id="sites"></div>
+  </section>
+  <section class="drawer-panel" id="history-panel" hidden>
+    <div class="card-head">
+      <h2>Arama geçmişi</h2>
+      <span class="head-actions">
+        <button class="btn sm ghost" type="button" id="clear-history" hidden>Tümünü temizle</button>
+        <button class="icon-btn drawer-close" type="button" aria-label="Kapat"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </span>
+    </div>
+    <ol class="history" id="history"></ol>
+  </section>
+</aside>
+
+<nav class="tabbar" id="tabbar" aria-label="Görünümler">
+  <button type="button" data-view="search" aria-current="page"><span aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>Ara</button>
+  <button type="button" data-view="track"><span aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></span>Takip<i class="tab-badge" id="tab-badge-track" hidden></i></button>
+  <button type="button" data-view="orders"><span aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3 3.5 7.5v9L12 21l8.5-4.5v-9z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/></svg></span>Sipariş<i class="tab-badge" id="tab-badge-orders" hidden></i></button>
+  <button type="button" data-view="cart"><span aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2.5 3.5h2.6l2.5 11.6a1.2 1.2 0 0 0 1.2.9h9.3a1.2 1.2 0 0 0 1.2-.9L21 7.5H6"/></svg></span>Sepet<i class="tab-badge" id="tab-badge-cart" hidden></i></button>
+  <button type="button" data-view="sites"><span aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg></span>Siteler</button>
+</nav>
+
+<dialog id="add-dialog" class="dialog">
+  <form method="dialog" id="add-form">
+    <h3>Site ekle</h3>
+    <label for="add-url">Site adresi</label>
+    <input id="add-url" type="text" inputmode="url" placeholder="ör. vatanbilgisayar.com" required autocomplete="off" autocapitalize="off" spellcheck="false">
+    <label for="add-group-select" class="add-group-label" id="add-group-label">Grup</label>
+    <select id="add-group-select"></select>
+    <p class="small muted">Adı, logosu ve arama sayfası otomatik bulunur. Token harcamaz.</p>
+    <p class="form-error" id="add-error" hidden></p>
+    <div class="dialog-actions">
+      <button class="btn ghost" type="button" value="cancel" id="add-cancel">Vazgeç</button>
+      <button class="btn primary" type="submit" id="add-submit">Ekle</button>
+    </div>
+  </form>
+</dialog>
+
+
+
+<div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>

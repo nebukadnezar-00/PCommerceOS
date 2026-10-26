@@ -1,0 +1,15 @@
+#!/bin/bash
+# Blocks commits that contain API keys or the .env file.
+set -u
+if git diff --cached --name-only | grep -qE '(^|/)\.env$'; then
+  echo "✋ .env commit'e eklenmiş — gizli anahtar içerir. 'git rm --cached .env' ile çıkarın." >&2
+  exit 1
+fi
+PATTERN='AIza[0-9A-Za-z_-]{35}|AQ\.[0-9A-Za-z_-]{20,}|(GEMINI|EVDS)_API_KEY *= *["'"'"']?[0-9A-Za-z._-]{20,}'
+hits=$(git diff --cached -U0 --no-color | grep -E '^\+[^+]' | grep -E "$PATTERN" || true)
+if [ -n "$hits" ]; then
+  echo "✋ Commit'te API anahtarına benzeyen bir değer var; commit durduruldu:" >&2
+  echo "$hits" | sed -E 's/(AIza|AQ\.)[0-9A-Za-z_-]{6,}/\1•••/g; s/((GEMINI|EVDS)_API_KEY *= *).*/\1•••/' >&2
+  exit 1
+fi
+exit 0

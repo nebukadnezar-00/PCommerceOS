@@ -1,0 +1,23 @@
+From: Uber Eats Trendyol Go <infotrendyolgo@mail.trendyolgo.com>
+To: kullanici@example.com
+Subject: Yemek =?utf-8?b?U2lwYXJpxZ9pbmkgQWxkxLFrIPCfjZQ=?=
+Date: Sun, 18 Oct 2026 06:32:45 +0000
+Message-ID: <tgo_received@test>
+Authentication-Results: mx.google.com; dkim=pass header.i=@mail.trendyolgo.com
+ header.s=s1 header.b=abc; spf=pass
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><body><table><tr><td>Sipari=C5=9Fin onayland=C4=B1. Sipari=C5=9F takibi=
+ni hesab=C4=B1ndan yapabilirsin.</td></tr>
+<tr><td>11722164726 numaral=C4=B1 Yemek sipari=C5=9Fini ald=C4=B1k, sipari=C5=
+=9Fin yola =C3=A7=C4=B1kt=C4=B1=C4=9F=C4=B1nda sana tekrar haber verece=C4=9F=
+iz.</td></tr></table>
+<table><tr><td>Ka=C5=9Farl=C4=B1 Po=C4=9Fa=C3=A7a - (Adet: 2)</td></tr><tr><t=
+d>Baget - (Adet: 1)</td></tr></table><table><tr><td>Ara Toplam</td><td>200 TR=
+Y</td></tr><tr><td>Teslimat =C3=9Ccreti</td><td>50 TRY</td></tr>
+<tr><td>Toplam</td><td>250TRY</td></tr><tr><td>Teslimat Adresi:</td></tr><tr>=
+<td>ADRES</td></tr></table>
+<a href=3D"https://tgoyemek.com/uyelik-sozlesmesi">s=C3=B6zle=C5=9Fme</a></bo=
+dy></html>

@@ -1,0 +1,16 @@
+From: Trendyol <bilgilendirme@trendyol.com>
+To: kullanici@example.com
+Subject: =?utf-8?q?Sipari=C5=9Fin?= kargoya verildi
+Date: Mon, 19 Oct 2026 09:00:00 +0300
+Message-ID: <trendyol_shipped@test>
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><head><style>p{color:red}</style></head><body><h1>Sipari=C5=9Fin yola =
+=C3=A7=C4=B1kt=C4=B1!</h1>
+<table><tr><td>Sipari=C5=9F No:</td><td>987654321</td></tr>
+<tr><td>=C3=9Cr=C3=BCn</td><td>Philips Airfryer XL</td></tr>
+<tr><td>Kargo Firmas=C4=B1</td><td>Aras Kargo</td></tr><tr><td>Kargo Takip No=
+:</td><td>1234567890123</td></tr>
+<tr><td>Toplam Tutar</td><td>3.499,90 TL</td></tr></table></body></html>

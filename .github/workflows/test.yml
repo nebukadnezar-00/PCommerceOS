@@ -1,0 +1,30 @@
+# Tests on Windows and macOS on every push, then starts the app the way a user does (launch.py,
+# standalone, empty data) and waits for /api/status.
+name: test
+on: [push, workflow_dispatch]
+concurrency:
+  group: test-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+        python: ["3.12", "3.13"]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install
+        run: python -m pip install -r requirements-dev.txt
+      - name: Tests
+        run: python -W ignore -m pytest -q
+      - name: Start like a user (launch.py)
+        run: python .github/launch_check.py 8002
+      - name: Price source reachable? (information only)
+        continue-on-error: true
+        run: python -W ignore .github/price_probe.py
